@@ -1,0 +1,101 @@
+# Copyright 2021-2022 Telematics Technologies sp. z o.o.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+replicas: 3
+resources:
+  requests:
+    memory: 2048Mi
+  limits:
+    memory: 2048Mi
+persistence:
+  storage: 10Gi
+monitoring:
+  enabled: true
+  perObjectMetrics: false # Enables monitoring of individual objects like queues at a cost of increased CPU and network load.
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          topologyKey: "kubernetes.io/hostname"
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: "{{ .Release.Name }}"
+podAnnotations: {}
+rabbitmq:
+  defaultVhost: /
+  defaultPolicies:
+    queues:
+      ha:
+        ha-mode: exactly
+        ha-params: "{{ add (div $.Values.replicas 2) 1 }}"
+        ha-sync-mode: automatic
+        ha-sync-batch-size: 4096
+      mem:
+        queue-mode: lazy # Do not keep message bodies in RAM in Classic Queues
+        max-in-memory-bytes: 0 # Do not keep message bodies in RAM in Quorum Queues
+  config: |
+    cluster_partition_handling = pause_minority
+    vm_memory_high_watermark.relative = 0.5
+    raft.wal_max_size_bytes = 67108864
+    disk_free_limit.absolute = 512MiB
+    log.file.level = debug
+    default_vhost = {{ .Values.rabbitmq.defaultVhost }}
+    default_user = {{ .Values.auth.username }}
+    default_pass = {{ .Values.auth.password }}
+#  additionalConfig: |
+#    log.file.level = info
+#  additionalPlugins:
+#    - rabbitmq_consistent_hash_exchange
+#    - rabbitmq_shovel
+#    - rabbitmq_shovel_management
+#  definitions: | # You can set up the cluster using definitions.json or use the topology CRDs which can apply changes without reboot (default and recommended)
+#    {
+#      "users": [
+#        {
+#          "name": "{{ .Values.auth.username }}",
+#          "password": "{{ .Values.auth.password }}",
+#          "tags": "administrator"
+#        }
+#      ],
+#      "vhosts": [
+#        {
+#          "name": "{{ include "get-default-vhost" . }}"
+#        }
+#      ],
+#      "policies": [
+#        {
+#          "vhost": "{{ include "get-default-vhost" . }}",
+#          "name": "default",
+#          "pattern": ".*",
+#          "apply-to": "queues",
+#          "definition":
+#            {{- $policies := dict }}
+#            {{- range $k, $v := .Values.rabbitmq.defaultPolicies.queues }}
+#              {{- $templatedPolicy := (tpl (toYaml $v) $) | replace `'` "" | fromYaml }}
+#              {{- $policies = merge $policies $templatedPolicy }}
+#            {{- end }}
+#            {{- toJson $policies | nindent 8 }}
+#        }
+#      ],
+#      "permissions": [
+#        {
+#          "user": "{{ .Values.auth.username }}",
+#          "vhost": "{{ include "get-default-vhost" . }}",
+#          "configure": ".*",
+#          "read": ".*",
+#          "write": ".*"
+#        }
+#      ]
+#    }
