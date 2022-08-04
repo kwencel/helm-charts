@@ -1,4 +1,5 @@
 # Copyright 2021-2022 Telematics Technologies sp. z o.o.
+# Copyright 2022 Krzysztof Wencel
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +14,7 @@
 # limitations under the License.
 
 apiVersion: v2
-name: rabbitmq-cluster
+name: rabbitmq
 description: A Helm chart for installing a RabbitMQ cluster using the RabbitMQ Cluster Operator
 
 # A chart can be either an 'application' or a 'library' chart.

@@ -51,4 +51,4 @@ The initial version of this project was developed at [Telematics Technologies sp
 To make a contribution to this project, please follow the instructions given in the [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
 ## License
-The project is available under the [Apache License, Version 2.0](LICENSE).
+The project is available under the [Apache License, Version 2.0](../../LICENSE).
