@@ -1,0 +1,15 @@
+apiVersion: v1
+entries:
+  rabbitmq:
+  - apiVersion: v2
+    appVersion: 1.1.0
+    created: "2022-08-04T23:45:18.915278013Z"
+    description: A Helm chart for installing a RabbitMQ cluster using the RabbitMQ
+      Cluster Operator
+    digest: d43d2844215e9ce3d2a8234fec9ca3a7158cae2049e1aee196af4c70461080dc
+    name: rabbitmq
+    type: application
+    urls:
+    - https://github.com/kwencel/helm-charts/releases/download/rabbitmq-1.1.0/rabbitmq-1.1.0.tgz
+    version: 1.1.0
+generated: "2022-08-04T23:45:18.915287613Z"
