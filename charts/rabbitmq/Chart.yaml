@@ -15,8 +15,15 @@
 
 apiVersion: v2
 name: rabbitmq
-description: A Helm chart for installing a RabbitMQ cluster using the RabbitMQ Cluster Operator
-
+description: 'A Helm chart for installing a RabbitMQ cluster using the RabbitMQ Cluster Operator'
+sources:
+  - https://github.com/kwencel/helm-charts/tree/main/charts/rabbitmq
+keywords:
+  - Rabbit
+  - RabbitMQ
+  - Operator
+  - Message queue
+  - AMQP
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives
