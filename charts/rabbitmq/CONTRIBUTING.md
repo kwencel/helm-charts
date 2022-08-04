@@ -4,7 +4,7 @@
 To make a contribution to this project, please prepare a pull request by filling the provided template. Your pull request will then need to be accepted by the project's maintainer.
 
 ## Legal
-While contributing to this project, you agree to publish your contributions under the [Apache License, Version 2.0](LICENSE). Please read the license text to understand all of the legal consequences.
+While contributing to this project, you agree to publish your contributions under the [Apache License, Version 2.0](../../LICENSE). Please read the license text to understand all of the legal consequences.
 
 ### Licence and copyright headers
 The source files of this project contain headers consisting of comments with copyright and licencing information. Please make sure to add or update this information while preparing your pull request, by following the instructions below.
