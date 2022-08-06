@@ -52,8 +52,6 @@ rabbitmq:
     disk_free_limit.absolute = 512MiB
     log.file.level = debug
     default_vhost = {{ .Values.rabbitmq.defaultVhost }}
-    default_user = {{ .Values.auth.username }}
-    default_pass = {{ .Values.auth.password }}
 #  additionalConfig: |
 #    log.file.level = info
 #  additionalPlugins:
